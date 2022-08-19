@@ -11,12 +11,19 @@ app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.volunteer_user}:${process.env.volunteer_password}@cluster0.eevembd.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-    const collection = client.db("volunteerNetwork").collection("member");
-    // perform actions on the collection object
-    console.log('db connected');
-    client.close();
-});
+
+async function run() {
+    try {
+        const volunteerCollection = client.db("volunteerNetwork").collection("member");
+        console.log('object');
+    }
+    catch {
+        await client.close();
+
+    }
+}
+
+run().catch(console.dir)
 
 
 app.get('/', (req, res) => {
