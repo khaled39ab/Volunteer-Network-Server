@@ -15,7 +15,6 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         const volunteerCollection = client.db("volunteerNetwork").collection("member");
-        console.log('object');
     }
     catch {
         await client.close();
