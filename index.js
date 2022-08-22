@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const port = process.env.PORT || 5000;
@@ -14,15 +15,11 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     try {
-        const volunteerCollection = client.db("volunteerNetwork").collection("event");
-        console.log("connected to mongo");
+        const volunteerCollection = client.db("VolunteerNetwork").collection("event");
 
-        app.get('/event', async (req, res) => {
+        app.get('/events', async (req, res) => {
             const query = {};
             const cursor = volunteerCollection.find(query);
-            if ((await cursor.count()) === 0) {
-                alert("No documents found!");
-            };
             const events = await cursor.toArray();
             res.send(events);
         });
@@ -31,7 +28,7 @@ async function run() {
 
         });
     }
-    catch {
+    finally {
         // await client.close();
 
     }
