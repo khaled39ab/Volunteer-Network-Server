@@ -15,7 +15,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     try {
-        const volunteerCollection = client.db("VolunteerNetwork").collection("event");
+        const volunteerCollection = client.db("VolunteerNetwork").collection("Events");
 
         app.get('/events', async (req, res) => {
             const query = {};
