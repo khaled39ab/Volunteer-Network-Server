@@ -14,10 +14,21 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     try {
-        const volunteerCollection = client.db("volunteerNetwork").collection("member");
+        const volunteerCollection = client.db("volunteerNetwork").collection("event");
+
+        app.get('/event', async (req, res) => {
+            const query = {};
+            const cursor = volunteerCollection.find(query);
+            const events = await cursor.toArray();
+            res.send(events);
+        });
+
+        app.post('/event', async (req, res) =>{
+            
+        });
     }
     catch {
-        await client.close();
+        // await client.close();
 
     }
 }
