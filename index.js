@@ -15,16 +15,20 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         const volunteerCollection = client.db("volunteerNetwork").collection("event");
+        console.log("connected to mongo");
 
         app.get('/event', async (req, res) => {
             const query = {};
             const cursor = volunteerCollection.find(query);
+            if ((await cursor.count()) === 0) {
+                alert("No documents found!");
+            };
             const events = await cursor.toArray();
             res.send(events);
         });
 
-        app.post('/event', async (req, res) =>{
-            
+        app.post('/event', async (req, res) => {
+
         });
     }
     catch {
