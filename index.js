@@ -24,8 +24,11 @@ async function run() {
             res.send(events);
         });
 
-        app.post('/event', async (req, res) => {
-
+        app.post('/events', async (req, res) => {
+            const newEvent = req.body;
+            console.log(newEvent);
+            const result = await volunteerCollection.insertOne(newEvent);
+            res.send(result);
         });
     }
     finally {
