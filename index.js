@@ -18,7 +18,7 @@ async function run() {
         const volunteerCollection = client.db("VolunteerNetwork").collection("Events");
         const eventCollection = client.db("VolunteerNetwork").collection("joinEvent");
 
-        // get api
+        // get events api
         app.get('/events', async (req, res) => {
             const query = {};
             const cursor = volunteerCollection.find(query);
@@ -26,25 +26,27 @@ async function run() {
             res.send(events);
         });
 
-        //post api
+        //post events api
         app.post('/events', async (req, res) => {
             const newEvent = req.body;
             const result = await volunteerCollection.insertOne(newEvent);
             res.send(result);
         });
 
+        // get joinEvent api 
         app.get('/joinEvent', async (req, res) => {
             const query = {};
             const cursor = eventCollection.find(query);
             const result = await cursor.toArray();
-            res.send(result)
+            res.send(result);
         });
 
+        //post joinEvent api
         app.post('/joinEvent', async (req, res) => {
             const joinEvent = req.body;
             const result = await eventCollection.insertOne(joinEvent);
-            res.send(result)
-        })
+            res.send(result);
+        });
     }
     finally {
         // await client.close();
