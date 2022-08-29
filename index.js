@@ -16,7 +16,9 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         const volunteerCollection = client.db("VolunteerNetwork").collection("Events");
+        const eventCollection = client.db("VolunteerNetwork").collection("joinEvent");
 
+        // get api
         app.get('/events', async (req, res) => {
             const query = {};
             const cursor = volunteerCollection.find(query);
@@ -24,12 +26,25 @@ async function run() {
             res.send(events);
         });
 
+        //post api
         app.post('/events', async (req, res) => {
             const newEvent = req.body;
-            console.log(newEvent);
             const result = await volunteerCollection.insertOne(newEvent);
             res.send(result);
         });
+
+        app.get('/joinEvent', async (req, res) => {
+            const query = {};
+            const cursor = eventCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result)
+        });
+
+        app.post('/joinEvent', async (req, res) => {
+            const joinEvent = req.body;
+            const result = await eventCollection.insertOne(joinEvent);
+            res.send(result)
+        })
     }
     finally {
         // await client.close();
