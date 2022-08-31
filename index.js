@@ -14,6 +14,7 @@ const uri = `mongodb+srv://${process.env.volunteer_user}:${process.env.volunteer
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function run() {
+
     try {
         const volunteerCollection = client.db("VolunteerNetwork").collection("Events");
         const eventCollection = client.db("VolunteerNetwork").collection("joinEvent");
@@ -48,9 +49,10 @@ async function run() {
             res.send(result);
         });
     }
-    finally {
-        // await client.close();
 
+    finally {
+        
+        // await client.close();
     }
 }
 
